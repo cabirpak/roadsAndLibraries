@@ -1,7 +1,6 @@
-#include <iostream>
-#include <vector>
+#include <stdio.h>
+#include <stdlib.h>
 #include <float.h>
-using namespace std;
 #define NUMBER_OF_ARRAYS 4
 #define ARRAY_SIZE 5
 int main()
@@ -30,7 +29,7 @@ int main()
             }
         }
     }
-    cout << "min: " << min << " and max: " << max;
+    printf("min: %lf and max: %lf", min, max);
 
     return 0;
 }
