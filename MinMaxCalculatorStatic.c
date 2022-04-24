@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <float.h>
+//#include <float.h>
 #define NUMBER_OF_ARRAYS 4
 #define ARRAY_SIZE 5
 int main()
@@ -28,7 +28,7 @@ int main()
     double loss2H[ARRAY_SIZE] = {3.3, 4.0, 2.1, 0.0, 0.0};
     double loss2V[ARRAY_SIZE] = {3.4, 1.4, 2.4, 0.0, 0.0};
     
-    double threshold = 0.0000001;
+    double threshold = 0.01;
     //statically constructed array of array instead of allocating dynamically by malloc
     double values[NUMBER_OF_ARRAYS][ARRAY_SIZE];
     
@@ -37,7 +37,7 @@ int main()
     for(int i=0; i<ARRAY_SIZE; i++)values[2][i] = loss2H[i];
     for(int i=0; i<ARRAY_SIZE; i++)values[3][i] = loss2V[i];
     
-    double min = DBL_MAX, max = 0;
+    double min = 999999.0, max = 0;
     for(int i=0; i<NUMBER_OF_ARRAYS; i++){
         for(int j=0; j<ARRAY_SIZE; j++){
             if(values[i][j] > threshold){
