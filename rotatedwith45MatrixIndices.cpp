@@ -1,66 +1,64 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
-vector < vector < int >> rotatedMatrixIndices (int width, int height){
-  vector < vector < int >> indices;
-  int r = 0;
-  int x=height-1, y=0;
-  
-  while(r < 2*height-1){
-      int w = width;
-      if(r%2 != 0)
-        w--;
+vector<vector<int>> rotatedMatrixPoints(int w, int h){
+    vector<vector<int>> result;
+    int x=h-1;
+    int y=0;
+    int rowlen = w;
+    for(int r = 0; r<2*h-1; r++){
+        if(r%2 == 0){
+            rowlen = w;
+        }
+        else{
+            rowlen = w-1;
+        }
         
-      for(int i=0; i<w; i++){
-          vector<int> pos({x+i, y+i});
-          indices.push_back(pos);
-      }
+        for(int i=0; i<rowlen; i++){
+            vector<int> p({x+i, y+i});
+            result.push_back(p);
+            //cout << x+i << ", " << y+i << endl;
+        }
         
-      r++;
-      if(r%2==0){
-          x--;
-      }else{
-          y++;
-      }
-  }
-  return indices;
-}
-
-void printIndices(vector < vector < int >>result){
-    cout << "--------------------------" << endl;
-  for (int i = 0; i < result.size (); i++){
-      for (int j = 0; j < result[0].size (); j++)
-        cout << result[i][j] << ", ";
-      cout << endl;
+        if(r%2 == 0){
+            
+            y++;
+        }
+        else{
+            x--;
+        }
     }
+    return result;
 }
+int main()
+{
+    int w = 3;
+    int h = 2;
+    int ContainerMatrixW = 4;
+    int ContainerMatrixH = 4;
+    int rotatedMatrixLen = w+h-1;
+    
+    vector<vector<int>> rotatedMatrix1 = rotatedMatrixPoints(w,h);
+    vector<vector<int>> rotatedMatrix2 = rotatedMatrixPoints(h,w);
+    
+    for(int sx=0; sx+rotatedMatrixLen<=ContainerMatrixW; sx++)
+        for(int sy=0; sy+rotatedMatrixLen<=ContainerMatrixH; sy++){
+            cout << "rotated left sx:" << sx << " sy:" << sy << endl;
+            for(vector<int> r:rotatedMatrix1){
+                for(int p:r){
+                    cout << p << ", ";
+                }
+                cout << endl;
+            }
+            
+            cout << "rotated right sx:" << sx << " sy:" << sy << endl;
+            for(vector<int> r:rotatedMatrix2){
+                for(int p:r){
+                    cout << p << ", ";
+                }
+                cout << endl;
+            }
+        }
 
-int main (){
-  cout << "Hello World" << endl;
-  int matrix_w=4, matrix_h=5;
-  int w=3, h=2;
-  
-  vector < vector < int >> rotatedIndices1 = rotatedMatrixIndices (w, h);
-  vector < vector < int >> rotatedIndices2 = rotatedMatrixIndices (h, w);
-  
-  int rotated_size = w+h-1;
-  for(int shiftx=0; shiftx<=matrix_w-rotated_size; shiftx++)
-      for(int shifty=0; shifty<=matrix_h-rotated_size; shifty++){
-          cout << "shiftx:" << shiftx << " shifty:" << shifty << endl;
-        vector < vector < int >> result1 = rotatedIndices1;
-        for(int i=0; i<result1.size(); i++){
-            result1[i][0] += shiftx;
-            result1[i][1] += shifty;
-        }
-        printIndices(result1);
-        
-        result1 = rotatedIndices2;
-        for(int i=0; i<result1.size(); i++){
-            result1[i][0] += shiftx;
-            result1[i][1] += shifty;
-        }
-        printIndices(result1);
-      }
-  return 0;
+    return 0;
 }
